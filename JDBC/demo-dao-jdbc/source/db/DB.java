@@ -28,26 +28,25 @@ public class DB {
     }
 
     public static void closeConnection() {
-        if (conn != null) {
-            try {
+        try {
+            if (conn != null) {
                 conn.close();
             }
-            catch (SQLException e) {
-                throw new DbException(e.getMessage());
-            }
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
         }
     }
-
+    
     private static Properties loadProperties() {
         try (FileInputStream fs = new FileInputStream("db.properties")) {
-            Properties props = new Properties();
-            props.load(fs);
-            return props;
+            Properties prop = new Properties();
+            prop.load(fs);
+            return prop;
         }
         catch (IOException e) {
             throw new DbException(e.getMessage());
         }
-        
     }
 
     public static void closeStatement(Statement st) {
@@ -61,7 +60,7 @@ public class DB {
         }
     }
 
-    public static void closeResulSet(ResultSet rs) {
+    public static void closeResultSet(ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();
